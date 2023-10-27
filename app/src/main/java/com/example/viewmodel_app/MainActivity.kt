@@ -60,32 +60,79 @@ class MainActivity : ComponentActivity() {
     }
 }
 @Composable
-fun  SelectJK(
+fun SelectJK(
     options: List<String>,
     oneSelectionChanged: (String) -> Unit = {}
 ){
     var selectedValue by rememberSaveable { mutableStateOf("") }
     Column(modifier = Modifier.padding(16.dp)){
-        options.forEach{item ->
-            Row(
-                modifier = Modifier.selectable(
-                    selected = selectedValue == item,
-                    onClick = {
+        // Tambahkan judul untuk jenis kelamin
+        Text(
+            text = "Jenis Kelamin:",
+            modifier = Modifier.fillMaxWidth(),
+            fontWeight = FontWeight.Bold
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween, // Menyusun pilihan secara horizontal
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            options.forEach { item ->
+                Row(
+                    modifier = Modifier.selectable(
+                        selected = selectedValue == item,
+                        onClick = {
+                            selectedValue = item
+                            oneSelectionChanged(item)
+                        }
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(selected = selectedValue == item, onClick = {
                         selectedValue = item
                         oneSelectionChanged(item)
-                    }
-                ),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                RadioButton(selected = selectedValue == item, onClick = {
-                    selectedValue = item
-                    oneSelectionChanged(item)
-                })
-                Text(item)
+                    })
+                    Text(item)
+                }
+            }
+        }
+
+        // Tambahkan judul untuk status
+        Text(
+            text = "Status:",
+            modifier = Modifier.fillMaxWidth(),
+            fontWeight = FontWeight.Bold
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val statusOptions = listOf("Belum Menikah", "Menikah")
+            statusOptions.forEach { item ->
+                Row(
+                    modifier = Modifier.selectable(
+                        selected = selectedValue == item,
+                        onClick = {
+                            selectedValue = item
+                            oneSelectionChanged(item)
+                        }
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(selected = selectedValue == item, onClick = {
+                        selectedValue = item
+                        oneSelectionChanged(item)
+                    })
+                    Text(item)
+                }
             }
         }
     }
 }
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TampilForm(cobaViewModel:CobaViewModel = CobaViewModel()){
