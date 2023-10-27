@@ -48,7 +48,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ViewModel_AppTheme{
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -66,7 +65,6 @@ fun SelectJK(
 ){
     var selectedValue by rememberSaveable { mutableStateOf("") }
     Column(modifier = Modifier.padding(16.dp)){
-        // Tambahkan judul untuk jenis kelamin
         Text(
             text = "Jenis Kelamin:",
             modifier = Modifier.fillMaxWidth(),
@@ -74,7 +72,7 @@ fun SelectJK(
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween, // Menyusun pilihan secara horizontal
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             options.forEach { item ->
@@ -97,7 +95,6 @@ fun SelectJK(
             }
         }
 
-        // Tambahkan judul untuk status
         Text(
             text = "Status:",
             modifier = Modifier.fillMaxWidth(),
@@ -136,13 +133,13 @@ fun SelectJK(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TampilForm(cobaViewModel:CobaViewModel = CobaViewModel()){
-    var textNama by remember {
+    var textUser by remember {
         mutableStateOf("")
     }
     var textTlp by remember {
         mutableStateOf("")
     }
-    var textAlamat by remember {
+    var textEmail by remember {
         mutableStateOf("")
     }
 
@@ -152,13 +149,13 @@ fun TampilForm(cobaViewModel:CobaViewModel = CobaViewModel()){
     dataform = uiState;
 
     OutlinedTextField(
-        value = textNama,
+        value = textUser,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Nama Lengkap")},
+        label = { Text(text = "Username")},
         onValueChange = {
-            textNama = it
+            textUser = it
         }
     )
     OutlinedTextField(
@@ -173,13 +170,13 @@ fun TampilForm(cobaViewModel:CobaViewModel = CobaViewModel()){
         }
     )
     OutlinedTextField(
-        value = textAlamat,
+        value = textEmail,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Alamat")},
+        label = { Text(text = "Email")},
         onValueChange = {
-            textAlamat = it
+            textEmail = it
         }
     )
     SelectJK(
@@ -189,7 +186,7 @@ fun TampilForm(cobaViewModel:CobaViewModel = CobaViewModel()){
     Button(
         modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaViewModel.insertData(textNama,textTlp, textAlamat, dataform.sex)
+            cobaViewModel.insertData(textUser,textTlp, textEmail, dataform.sex)
         }
     ) {
         Text(
@@ -235,7 +232,7 @@ fun TextHasil(namanya: String, telponnya: String, alamatnya: String, jenisnya: S
             .fillMaxWidth()
     ){
         Text(
-            text = "Nama : " + namanya,
+            text = "Username : " + namanya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
@@ -245,7 +242,7 @@ fun TextHasil(namanya: String, telponnya: String, alamatnya: String, jenisnya: S
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
         Text(
-            text = "Alamat : " + alamatnya,
+            text = "Email : " + alamatnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
